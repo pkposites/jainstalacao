@@ -2,7 +2,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 window.dataLayer = window.dataLayer || [];
 
-const WHATSAPP_NUMBER = '5511950922446';
+const WHATSAPP_NUMBER = '551150922446';
 
 function trackConversion(eventName, extra) {
   window.dataLayer.push(Object.assign({ event: eventName }, extra || {}));

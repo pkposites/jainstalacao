@@ -19,7 +19,7 @@ HTML + CSS + JS puro, sem build step. Pronto para deploy direto no Netlify (arqu
 
 ## Configurações de contato
 Editar em `index.html` e `script.js`:
-- Número de WhatsApp: `5511950922446`
+- Número de WhatsApp: `551150922446`
 - Telefone: `+551150922446`
 
 ## Google Tag Manager e conversões (Google Ads)
