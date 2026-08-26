@@ -1,6 +1,20 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
+window.dataLayer = window.dataLayer || [];
+
 const WHATSAPP_NUMBER = '5511950922446';
+
+function trackConversion(eventName, extra) {
+  window.dataLayer.push(Object.assign({ event: eventName }, extra || {}));
+}
+
+// Cliques diretos em links de WhatsApp e telefone (hero, fab, contatos diretos)
+document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+  link.addEventListener('click', () => trackConversion('whatsapp_click', { link_location: link.closest('section, header, .fab-whatsapp')?.id || link.className }));
+});
+document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+  link.addEventListener('click', () => trackConversion('phone_click', { link_location: link.closest('section, header')?.id || link.className }));
+});
 
 const services = [
   {
@@ -74,6 +88,7 @@ function openModal(index) {
   const msg = encodeURIComponent(`Olá! Gostaria de solicitar o serviço: ${s.title}`);
   modalCta.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
   modalOverlay.classList.add('open');
+  trackConversion('service_modal_open', { service_name: s.title });
 }
 function closeModal() {
   modalOverlay.classList.remove('open');
@@ -82,6 +97,7 @@ function closeModal() {
 cards.forEach(card => {
   card.addEventListener('click', () => openModal(Number(card.dataset.service)));
 });
+modalCta.addEventListener('click', () => trackConversion('whatsapp_click', { link_location: 'service_modal' }));
 document.getElementById('modalClose').addEventListener('click', closeModal);
 modalOverlay.addEventListener('click', (e) => {
   if (e.target === modalOverlay) closeModal();
@@ -96,5 +112,8 @@ form.addEventListener('submit', (e) => {
 
   const message = `Olá! Gostaria de solicitar um atendimento.\n\nNome: ${name}\nServiço: ${service}\nRegião: ${region}`;
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+  trackConversion('form_submit', { service_type: service, region: region });
+
   window.open(url, '_blank', 'noopener');
 });
