@@ -350,6 +350,19 @@ h1, h2, h3 { font-family: var(--font-head); margin: 0 0 0.5em; color: var(--blue
   text-decoration: none;
 }
 
+/* Legal pages */
+.legal-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+.legal-content h1 { font-size: 26px; margin-bottom: 4px; }
+.legal-updated { color: var(--gray-500); font-size: 13px; margin-bottom: 24px; }
+.legal-content h2 { font-size: 18px; margin-top: 30px; }
+.legal-content p, .legal-content li { color: var(--gray-700); font-size: 14px; line-height: 1.7; }
+.legal-content ul { padding-left: 20px; margin: 10px 0; }
+.legal-content a { color: var(--blue-700); }
+
 /* Desktop refinements */
 @media (min-width: 720px) {
   .hero h1 { font-size: 38px; max-width: 700px; margin-left: auto; margin-right: auto; }
