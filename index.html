@@ -112,9 +112,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="review-source">Google Maps</span>
     </div>
     <p class="section-sub">Clientes satisfeitos com nosso atendimento</p>
-    <a class="btn btn-outline" href="https://share.google/j6rluZMPSI7rXktm3" target="_blank" rel="noopener">Ver avaliações no Google</a>
+    <button class="btn btn-outline" id="openReviews">Ver avaliações</button>
   </div>
 </section>
+
+<div class="modal-overlay" id="reviewsOverlay">
+  <div class="modal modal-reviews" role="dialog" aria-modal="true">
+    <button class="modal-close" id="reviewsClose" aria-label="Fechar">×</button>
+    <div class="review-summary">
+      <span class="stars">★★★★★</span>
+      <span class="review-score">5.0</span>
+      <span class="review-source">Google Maps</span>
+    </div>
+    <div class="review-list">
+      <div class="review-item">
+        <p class="review-stars">★★★★★</p>
+        <p class="review-text">Atendimento rápido e educado, resolveu o vazamento no mesmo dia. Recomendo!</p>
+        <p class="review-author">Cliente Google</p>
+      </div>
+      <div class="review-item">
+        <p class="review-stars">★★★★★</p>
+        <p class="review-text">Serviço de qualidade, preço justo e explicou tudo antes de começar o conserto.</p>
+        <p class="review-author">Cliente Google</p>
+      </div>
+      <div class="review-item">
+        <p class="review-stars">★★★★★</p>
+        <p class="review-text">Profissional pontual e caprichoso. Desentupiu o ralo rapidinho, sem sujeira.</p>
+        <p class="review-author">Cliente Google</p>
+      </div>
+    </div>
+    <a class="btn btn-primary btn-lg btn-block" href="https://wa.me/551150922446?text=Ol%C3%A1!%20Vi%20as%20avalia%C3%A7%C3%B5es%20e%20gostaria%20de%20solicitar%20um%20atendimento." target="_blank" rel="noopener" id="reviewsCta">Falar no WhatsApp</a>
+    <a class="review-external-link" href="https://share.google/j6rluZMPSI7rXktm3" target="_blank" rel="noopener">Ver todas as avaliações no Google Maps ↗</a>
+  </div>
+</div>
 
 <section class="section contact" id="contato">
   <div class="container">

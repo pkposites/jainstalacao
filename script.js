@@ -9,7 +9,7 @@ function trackConversion(eventName, extra) {
 }
 
 // Cliques diretos em links de WhatsApp e telefone (hero, fab, contatos diretos)
-document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+document.querySelectorAll('a[href*="wa.me"]:not(#modalCta):not(#reviewsCta)').forEach(link => {
   link.addEventListener('click', () => trackConversion('whatsapp_click', { link_location: link.closest('section, header, .fab-whatsapp')?.id || link.className }));
 });
 document.querySelectorAll('a[href^="tel:"]').forEach(link => {
@@ -102,6 +102,17 @@ document.getElementById('modalClose').addEventListener('click', closeModal);
 modalOverlay.addEventListener('click', (e) => {
   if (e.target === modalOverlay) closeModal();
 });
+
+const reviewsOverlay = document.getElementById('reviewsOverlay');
+document.getElementById('openReviews').addEventListener('click', () => {
+  reviewsOverlay.classList.add('open');
+  trackConversion('reviews_modal_open');
+});
+document.getElementById('reviewsClose').addEventListener('click', () => reviewsOverlay.classList.remove('open'));
+reviewsOverlay.addEventListener('click', (e) => {
+  if (e.target === reviewsOverlay) reviewsOverlay.classList.remove('open');
+});
+document.getElementById('reviewsCta').addEventListener('click', () => trackConversion('whatsapp_click', { link_location: 'reviews_modal' }));
 
 const form = document.getElementById('contactForm');
 form.addEventListener('submit', (e) => {
