@@ -44,3 +44,18 @@ O site empurra os seguintes eventos para o `dataLayer` a cada ação de convers�
 5. Recomendado: marcar `whatsapp_click` e `form_submit` como conversões principais (são os eventos de maior intenção); `phone_click` e `service_modal_open` podem ser usados como conversões secundárias/micro-conversões para otimização de lances.
 
 Nenhuma alteração de código é necessária para adicionar/ajustar conversões — tudo é feito dentro do GTM a partir dos eventos já disponíveis.
+
+## Recebendo os leads do formulário (Netlify Forms)
+
+O formulário de contato ("Solicite seu atendimento") grava cada envio no **Netlify Forms**, além de abrir o WhatsApp com a mensagem pronta. Isso garante que, mesmo que o visitante feche a aba antes de enviar a mensagem no WhatsApp, o nome e telefone já ficam registrados para retorno.
+
+### Como consultar os leads
+1. No painel do Netlify, abra o site → aba **Forms**.
+2. O formulário `contato` lista todos os envios, com nome, telefone, serviço e região.
+
+### Como receber por e-mail a cada novo lead (recomendado)
+1. No painel do Netlify: **Site configuration → Forms → Form notifications**.
+2. Clique em **Add notification → Email notification**.
+3. Informe o e-mail que deve receber o aviso a cada novo envio.
+
+Assim, todo lead cai automaticamente na caixa de entrada, com nome e telefone para retorno rápido — sem depender do visitante concluir o envio pelo WhatsApp.

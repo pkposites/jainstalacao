@@ -114,14 +114,28 @@ reviewsOverlay.addEventListener('click', (e) => {
 });
 document.getElementById('reviewsCta').addEventListener('click', () => trackConversion('whatsapp_click', { link_location: 'reviews_modal' }));
 
+function encodeFormData(data) {
+  return Object.keys(data)
+    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+    .join('&');
+}
+
 const form = document.getElementById('contactForm');
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const name = document.getElementById('fname').value.trim();
+  const phone = document.getElementById('fphone').value.trim();
   const service = document.getElementById('fservice').value;
   const region = document.getElementById('fregion').value.trim();
 
-  const message = `Olá! Gostaria de solicitar um atendimento.\n\nNome: ${name}\nServiço: ${service}\nRegião: ${region}`;
+  // Envia os dados para o Netlify Forms, para consulta rápida no painel do Netlify
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: encodeFormData({ 'form-name': 'contato', fname: name, fphone: phone, fservice: service, fregion: region })
+  }).catch(() => {});
+
+  const message = `Olá! Gostaria de solicitar um atendimento.\n\nNome: ${name}\nTelefone: ${phone}\nServiço: ${service}\nRegião: ${region}`;
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
   trackConversion('form_submit', { service_type: service, region: region });
