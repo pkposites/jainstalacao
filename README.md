@@ -1,6 +1,6 @@
 # J.A Instalações
 
-Site institucional (uma página, mobile-first) para a J.A Instalações, encanador/bombeiro hidráulico em São Paulo.
+Site institucional (uma página, mobile-first) para a J.A Instalações, encanador/bombeiro hidráulico em São Paulo. Otimizado para campanhas de Google Ads, com rastreamento de conversões via Google Tag Manager.
 
 ## Stack
 HTML + CSS + JS puro, sem build step. Pronto para deploy direto no Netlify (arquivo `netlify.toml` já configurado com `publish = "."`).
