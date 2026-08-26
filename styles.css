@@ -125,6 +125,12 @@ h1, h2, h3 { font-family: var(--font-head); margin: 0 0 0.5em; color: var(--blue
   max-width: 320px;
   margin: 0 auto;
 }
+.hero .btn-outline {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.7);
+}
+.hero .btn-outline:hover { background: rgba(255,255,255,0.16); }
 .hero-badges {
   display: flex;
   flex-wrap: wrap;
