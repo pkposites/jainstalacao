@@ -21,6 +21,7 @@ Este documento descreve o padrão de site usado no projeto J.A Instalações, pa
 ## Regras de conteúdo/copy
 - **Nunca prometer "orçamento grátis"** a menos que seja realmente o caso — usar frases como "Consulte a taxa de visita para a sua região".
 - Avaliações exibidas devem ser **sempre reais**, nunca inventadas — se o cliente não fornecer, deixar a seção fora do ar até ter conteúdo real (não usar depoimentos fictícios em site com tráfego pago).
+- A **nota agregada** (badge, resumo, `aggregateRating` no JSON-LD) deve ser sempre a nota real do perfil do Google do cliente — nunca assumir 5.0 por padrão. Peça print do perfil do Google (mostra nota + total de avaliações) antes de publicar essa seção.
 - CTAs de WhatsApp sempre com número **sem o 9º dígito quando o negócio usa fixo/comercial** — confirmar com o cliente o número exato do WhatsApp Business.
 
 ## Design system (tokens em `styles.css`)
