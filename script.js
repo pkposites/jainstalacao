@@ -8,6 +8,64 @@ function trackConversion(eventName, extra) {
   window.dataLayer.push(Object.assign({ event: eventName }, extra || {}));
 }
 
+// Captura de origem do lead: UTMs + parâmetros dinâmicos do Meta Ads/Google Ads.
+// Gravados em sessionStorage assim que aparecem na URL, pra não perder a
+// origem se o usuário navegar pela página antes de preencher o formulário.
+const LEAD_SOURCE_STORAGE_KEY = 'ja_lead_source';
+const LEAD_SOURCE_PARAMS = [
+  'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+  'campaign_name', 'campaign_id', 'adset_name', 'adset_id', 'ad_name', 'ad_id',
+  'fbclid', 'gclid'
+];
+
+function captureLeadSource() {
+  try {
+    const stored = JSON.parse(sessionStorage.getItem(LEAD_SOURCE_STORAGE_KEY) || '{}');
+    const params = new URLSearchParams(window.location.search);
+    let changed = false;
+    LEAD_SOURCE_PARAMS.forEach((key) => {
+      const value = params.get(key);
+      if (value) { stored[key] = value; changed = true; }
+    });
+    if (changed) sessionStorage.setItem(LEAD_SOURCE_STORAGE_KEY, JSON.stringify(stored));
+    return stored;
+  } catch (e) {
+    return {};
+  }
+}
+
+function getLeadSource() {
+  const fromUrl = captureLeadSource();
+  if (Object.keys(fromUrl).length > 0) return fromUrl;
+  try {
+    return JSON.parse(sessionStorage.getItem(LEAD_SOURCE_STORAGE_KEY) || '{}');
+  } catch (e) {
+    return {};
+  }
+}
+
+// Monta o bloco "Origem do lead:" pra mensagem do WhatsApp/CRM, mostrando
+// só as linhas que tiverem valor.
+function buildLeadSourceBlock(source) {
+  const lines = [];
+  if (source.utm_source || source.utm_medium) {
+    lines.push(`Canal: ${[source.utm_source, source.utm_medium].filter(Boolean).join(' / ')}`);
+  }
+  const campaign = source.campaign_name || source.utm_campaign;
+  if (campaign) lines.push(`Campanha: ${campaign}`);
+  if (source.adset_name) lines.push(`Conjunto de anúncios: ${source.adset_name}`);
+  const ad = source.ad_name || source.utm_content;
+  if (ad) lines.push(`Anúncio: ${ad}`);
+  if (source.utm_term) lines.push(`Termo/Público: ${source.utm_term}`);
+  if (source.fbclid) lines.push('Origem: Meta Ads (Facebook/Instagram)');
+  if (source.gclid) lines.push('Origem: Google Ads');
+
+  if (lines.length === 0) return '';
+  return `\n\nOrigem do lead:\n${lines.join('\n')}`;
+}
+
+const leadSource = getLeadSource();
+
 // Cliques diretos em links de WhatsApp e telefone (hero, fab, contatos diretos)
 document.querySelectorAll('a[href*="wa.me"]:not(#modalCta):not(#reviewsCta)').forEach(link => {
   link.addEventListener('click', () => trackConversion('whatsapp_click', { link_location: link.closest('section, header, .fab-whatsapp')?.id || link.className }));
@@ -135,10 +193,20 @@ form.addEventListener('submit', (e) => {
     body: encodeFormData({ 'form-name': 'contato', fname: name, fphone: phone, fservice: service, fregion: region })
   }).catch(() => {});
 
-  const message = `Olá! Gostaria de solicitar um atendimento.\n\nNome: ${name}\nTelefone: ${phone}\nServiço: ${service}\nRegião: ${region}`;
+  const source = getLeadSource();
+  const message = `Olá! Gostaria de solicitar um atendimento.\n\nNome: ${name}\nTelefone: ${phone}\nServiço: ${service}\nRegião: ${region}${buildLeadSourceBlock(source)}`;
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
   trackConversion('form_submit', { service_type: service, region: region });
+
+  // Se houver Meta Pixel instalado nesta LP, dispara o Lead com a
+  // campanha/anúncio detectados na URL/sessão.
+  if (typeof fbq === 'function') {
+    fbq('track', 'Lead', {
+      content_name: source.campaign_name || source.utm_campaign || 'Formulário de contato',
+      ad_name: source.ad_name || source.utm_content || undefined
+    });
+  }
 
   window.open(url, '_blank', 'noopener');
 });
