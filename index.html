@@ -146,10 +146,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="modal-overlay" id="leadGateOverlay">
   <div class="modal" role="dialog" aria-modal="true">
     <button class="modal-close" id="leadGateClose" aria-label="Fechar">×</button>
+    <div class="online-badge"><span class="online-dot"></span> Atendimento online agora</div>
     <div class="modal-icon">💬</div>
-    <h3>Antes de continuar</h3>
-    <p>Só precisamos do seu nome e WhatsApp para te atender melhor.</p>
+    <h3>Fale agora com nossa equipe sobre o seu problema!</h3>
+    <p>Serviço com nota fiscal (NF-e) e pagamento no cartão de crédito. Sem compromisso.</p>
     <form id="leadGateForm" class="form" style="text-align:left;">
+      <label>
+        O que você está precisando?
+        <select id="leadService" required>
+          <option value="" disabled selected>Selecione um serviço</option>
+          <option value="Encanador urgente">Encanador urgente</option>
+          <option value="Consertos urgentes">Consertos urgentes</option>
+          <option value="Desentupimento">Desentupimento</option>
+          <option value="Detecção de vazamentos">Detecção de vazamentos</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </label>
       <label>
         Nome
         <input type="text" id="leadName" required placeholder="Seu nome">

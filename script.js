@@ -171,9 +171,10 @@ if (reviewsOverlay) {
   });
 }
 
-// Lead Hub: captura nome + WhatsApp antes de abrir a conversa, em todo link de WhatsApp
+// Lead Hub: captura serviço + nome + WhatsApp antes de abrir a conversa, em todo link de WhatsApp
 const leadGateOverlay = document.getElementById('leadGateOverlay');
 const leadGateForm = document.getElementById('leadGateForm');
+const leadService = document.getElementById('leadService');
 const leadName = document.getElementById('leadName');
 const leadPhone = document.getElementById('leadPhone');
 let pendingWhatsApp = null;
@@ -203,14 +204,19 @@ leadGateOverlay.addEventListener('click', (e) => {
 leadGateForm.addEventListener('submit', (e) => {
   e.preventDefault();
   if (!pendingWhatsApp) return;
+  const service = leadService.value;
   const name = leadName.value.trim();
   const phone = leadPhone.value.trim();
-  if (!name || !phone) return;
+  if (!service || !name || !phone) return;
 
+  const message = `Olá! Gostaria de solicitar um atendimento.\n\nServiço: ${service}\nNome: ${name}\nWhatsApp: ${phone}`;
+  const baseUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+  window.LeadHub?.set({ 'Serviço': service });
   window.LeadHub?.identify({ name, phone });
-  const destino = window.LeadHub ? window.LeadHub.whatsappUrl(pendingWhatsApp.url) : pendingWhatsApp.url;
+  const destino = window.LeadHub ? window.LeadHub.whatsappUrl(baseUrl) : baseUrl;
 
-  trackConversion('whatsapp_click', { link_location: pendingWhatsApp.location });
+  trackConversion('whatsapp_click', { link_location: pendingWhatsApp.location, service_type: service });
 
   window.open(destino, '_blank', 'noopener');
   closeLeadGate();

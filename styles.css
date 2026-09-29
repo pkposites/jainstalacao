@@ -256,6 +256,34 @@ h1, h2, h3 { font-family: var(--font-head); margin: 0 0 0.5em; color: var(--blue
 .modal p { color: var(--gray-700); font-size: 14px; line-height: 1.6; margin-bottom: 22px; }
 .lead-consent { font-size: 12px; color: var(--gray-500); line-height: 1.5; margin: 12px 0 0; }
 .lead-consent a { color: var(--blue-700); }
+
+.online-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #e8f9ef;
+  color: var(--green-dark);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+.online-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .online-dot { animation: onlinePulse 1.8s ease-in-out infinite; }
+}
+@keyframes onlinePulse {
+  0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.6); }
+  70% { box-shadow: 0 0 0 7px rgba(37,211,102,0); }
+  100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+}
 .modal-close {
   position: absolute;
   top: 12px; right: 14px;
