@@ -10,6 +10,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<!-- Google Consent Mode (default: negado até aceite) -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {
+  ad_storage: 'denied',
+  analytics_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied'
+});
+</script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -17,6 +28,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-M7ZGPMRT');</script>
 <!-- End Google Tag Manager -->
+<!-- Lead Hub -->
+<script src="https://leadinghub.netlify.app/tracker.js" data-key="pk_a7a9316b735740da9eaf41651eeba41a" data-consent="banner" async></script>
+<!-- End Lead Hub -->
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -72,6 +86,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p>Seus dados podem ser processados pelas seguintes ferramentas, que atuam como operadoras de dados:</p>
     <ul>
       <li>Google (Google Tag Manager e Google Ads) — para fins de mensuração e publicidade;</li>
+      <li>Lead Hub — ferramenta própria de registro de contatos, que grava seu nome e WhatsApp somente após o seu aceite de cookies, junto com a origem do anúncio que trouxe você até o site. Veja a <a href="https://leadinghub.netlify.app/privacidade/pk_a7a9316b735740da9eaf41651eeba41a" target="_blank" rel="noopener">política de privacidade do Lead Hub</a>;</li>
       <li>WhatsApp (Meta) — quando você opta por entrar em contato pelo botão de WhatsApp, a conversa passa a ser regida pela política de privacidade do próprio WhatsApp.</li>
     </ul>
 
@@ -102,6 +117,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+<div class="modal-overlay" id="leadGateOverlay">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" id="leadGateClose" aria-label="Fechar">×</button>
+    <div class="modal-icon">💬</div>
+    <h3>Antes de continuar</h3>
+    <p>Só precisamos do seu nome e WhatsApp para te atender melhor.</p>
+    <form id="leadGateForm" class="form" style="text-align:left;">
+      <label>
+        Nome
+        <input type="text" id="leadName" required placeholder="Seu nome">
+      </label>
+      <label>
+        WhatsApp com DDD
+        <input type="tel" id="leadPhone" required placeholder="(11) 91234-5678" inputmode="numeric">
+      </label>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Continuar para o WhatsApp</button>
+      <p class="lead-consent">Ao continuar, você concorda em ser contatado pelo WhatsApp. Veja a <a href="https://leadinghub.netlify.app/privacidade/pk_a7a9316b735740da9eaf41651eeba41a" target="_blank" rel="noopener">Política de privacidade</a>.</p>
+    </form>
+  </div>
+</div>
+
 <footer class="site-footer">
   <div class="container">
     <div class="logo footer-logo">
@@ -113,10 +149,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="footer-meta">
       <a href="index.html">Voltar para a página inicial</a>
     </p>
+    <p class="footer-meta">
+      <a href="https://leadinghub.netlify.app/privacidade/pk_a7a9316b735740da9eaf41651eeba41a" target="_blank" rel="noopener">Privacidade do Lead Hub</a>
+    </p>
     <p class="footer-copy">© <span id="year"></span> J.A Instalações. Todos os direitos reservados.</p>
   </div>
 </footer>
 
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="script.js"></script>
 </body>
 </html>
