@@ -138,6 +138,35 @@ h1, h2, h3 { font-family: var(--font-head); margin: 0 0 0.5em; color: var(--blue
   justify-content: center;
   margin-top: 22px;
 }
+
+.hero-marquee {
+  overflow: hidden;
+  margin-top: 26px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+}
+.hero-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: heroMarqueeScroll 16s linear infinite;
+}
+.hero-marquee-track span {
+  white-space: nowrap;
+  color: var(--blue-100);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding-right: 56px;
+}
+@keyframes heroMarqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-marquee-track { animation: none; }
+}
+
 .badge {
   background: rgba(255,255,255,0.12);
   border: 1px solid rgba(255,255,255,0.25);
